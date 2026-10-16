@@ -29,15 +29,16 @@ function ModulesVsJourney({ modules, stages }) {
         <figcaption className="absolute -top-3 left-5 bg-cream px-2 font-mono text-[11px] text-ink-soft">
           before / module by module
         </figcaption>
-        <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+        <ul aria-hidden className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+          {/* unlabelled grey blocks: the point is the pile, not the names. A non-breaking space keeps one line's height */}
           {modules.map((m, k) => (
             <li
               key={m}
-              className={`rounded-md border-2 border-ink/25 bg-paper px-2 py-3 text-center font-mono text-[11px] text-ink-soft ${
+              className={`rounded-md border-2 border-ink/15 bg-ink/10 px-2 py-3 font-mono text-[11px] ${
                 ['rotate-1', '-rotate-1', 'rotate-0', '-rotate-2', 'rotate-2'][k % 5]
               }`}
             >
-              {m}
+              {' '}
             </li>
           ))}
         </ul>
