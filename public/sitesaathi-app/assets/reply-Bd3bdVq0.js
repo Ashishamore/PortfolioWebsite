@@ -1,0 +1,1 @@
+import{I as e}from"./ui-DcZw8WrP.js";var t={name:`reply`,size:24,node:[[`path`,{d:`M20 18v-2a4 4 0 0 0-4-4H4`,key:`5vmcpk`}],[`path`,{d:`m9 17-5-5 5-5`,key:`nvlc11`}]]};t.node;var n=e(t);export{n as t};

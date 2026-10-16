@@ -1,0 +1,9 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+# Source projects kept beside the site. The site uses its own built copies in public/ and src/assets/.
+Portfolio-Project-1/
+contractors app/
+asset/

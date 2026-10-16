@@ -1,0 +1,250 @@
+@import 'tailwindcss';
+/* a separate project sits in this folder; don't scan it for class names */
+@source not '../Portfolio-Project-1';
+@source not '../contractors app';
+
+/*
+  Research × creativity × tech:
+  whiteboard paper + sticky notes + marker scribbles + a little Figma chrome.
+*/
+@theme {
+  --color-cream: #f7f4ea;
+  --color-paper: #fffdf6;
+  --color-sand: #f3e9ae; /* sampled from the hero photo's top edge so header and image blend */
+  --color-butter: #efe4a6;
+  --color-butter-deep: #e3d47f;
+  --color-ink: #16232c;
+  --color-ink-soft: #3b4852;
+  --color-muted: #6b7378;
+  --color-line: #e2dcc4;
+
+  /* sticky-note pad */
+  --color-note-yellow: #ffe58a;
+  --color-note-pink: #ffc6d3;
+  --color-note-blue: #bfe0f5;
+  --color-note-green: #cbe8b8;
+  --color-note-orange: #ffcb9e;
+  --color-note-lilac: #dccff7;
+
+  /* pens */
+  --color-marker: #ec5b3b; /* red-orange felt tip for scribbles */
+  --color-figma: #2f6bff; /* selection-box blue */
+
+  --font-sans: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-cream bg-dots font-sans text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-note-yellow text-ink;
+  }
+}
+
+/* FigJam-style dotted canvas */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(22 35 44 / 0.13) 1px, transparent 1.3px);
+  background-size: 22px 22px;
+}
+@utility bg-dots-light {
+  background-image: radial-gradient(rgb(247 244 234 / 0.14) 1px, transparent 1.3px);
+  background-size: 22px 22px;
+}
+
+/* A sticky note: flat colour, slight lift at the bottom edge, handwritten text */
+@utility sticky-note {
+  font-family: var(--font-hand);
+  line-height: 1.1;
+  color: var(--color-ink);
+  box-shadow:
+    0 1px 1px rgb(22 35 44 / 0.08),
+    0 12px 18px -10px rgb(22 35 44 / 0.45);
+}
+
+/* A strip of masking tape across the top edge */
+/* (the note itself must be positioned: relative or absolute) */
+@utility tape {
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 64px;
+    height: 20px;
+    transform: translateX(-50%) rotate(-4deg);
+    background: rgb(255 255 255 / 0.55);
+    box-shadow: 0 1px 2px rgb(22 35 44 / 0.12);
+    backdrop-filter: blur(1px);
+  }
+}
+
+/* Highlighter swipe behind inline text */
+@utility marker-swipe {
+  background-image: linear-gradient(
+    100deg,
+    transparent 2%,
+    var(--color-note-yellow) 4%,
+    var(--color-note-yellow) 94%,
+    transparent 97%
+  );
+  background-size: 100% 42%;
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+  padding-inline: 0.12em;
+  /* when the highlight wraps onto a new line, give each line its own swipe */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/*
+  A box that covers its container exactly like the hero <img> (object-cover),
+  so annotations placed in % stay pinned to the same spot in the photo at any screen size.
+  Keep the 0.78 / 0.75 / 0.3 factors in sync with the img's object-position.
+*/
+@utility photo-frame {
+  --w: max(100cqw, 100cqh * 2000 / 1331);
+  --h: max(100cqh, 100cqw * 1331 / 2000);
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  left: calc((100cqw - var(--w)) * 0.78);
+  top: calc((100cqh - var(--h)) * 0.3);
+  @media (width >= 64rem) {
+    left: calc((100cqw - var(--w)) * 0.75);
+  }
+}
+
+/* Light halo so marker notes stay readable on any part of the photo */
+@utility halo {
+  filter: drop-shadow(0 0 1px var(--color-paper)) drop-shadow(0 0 4px var(--color-paper));
+}
+
+/* Hard offset shadow for the "raw" card hover */
+@utility shadow-hard {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes float {
+  50% {
+    transform: translate(6px, -8px);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Hand-drawn SVG strokes draw themselves in once visible (paths use pathLength="1") */
+.scribble path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.is-visible .scribble path,
+.scribble.draw-now path {
+  animation: draw 1.1s 0.3s ease forwards;
+}
+
+/* Case-study journey map: the case path draws in, steps pop in, extras fade in */
+.journey-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.8s 0.4s ease-in-out forwards;
+}
+.journey-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.45s ease both;
+}
+.journey-fade {
+  animation: fadeIn 0.6s ease both;
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+/* Fade-up on scroll, toggled by the Reveal component */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Printing / saving as PDF: show everything in its finished state, with colours intact */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .journey-draw,
+  .scribble path {
+    stroke-dashoffset: 0 !important;
+  }
+  .story-spine-fill {
+    height: 100% !important;
+  }
+  .story-marker {
+    border-color: var(--color-ink) !important;
+    background: var(--color-ink) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

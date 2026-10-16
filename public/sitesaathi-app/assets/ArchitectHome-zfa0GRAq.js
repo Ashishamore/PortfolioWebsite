@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-Bz1YRJtO.js";import{CoordinatorView as t}from"./Subcon-CMSSWoCJ.js";var n=e();function r(){return(0,n.jsx)(t,{root:!0})}export{r as default};
