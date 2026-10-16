@@ -227,6 +227,10 @@
   .scribble path {
     stroke-dashoffset: 0 !important;
   }
+  /* viewport units mean the whole page when printing, so a full-height hero keeps its screen height */
+  .lg\:min-h-svh {
+    min-height: 56.25rem !important;
+  }
   .story-spine-fill {
     height: 100% !important;
   }

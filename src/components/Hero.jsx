@@ -1,9 +1,44 @@
+import { useEffect, useRef } from 'react'
 import heroImage from '../assets/hero.jpg'
 import { certification, hero, heroNotes, heroStats, profile } from '../data/content'
 import { Cursor, CurvyArrow, Palette, Selection, Sparkle, Squiggle, StickyNote } from './Doodles'
 import { ArrowDown, ArrowUpRight, SealIcon } from './Icons'
 
+// Chrome renders a blank page when printing a size container, so before printing the photo's
+// pinned annotations are frozen at their on-screen size and the container query is switched off.
+function usePrintSafePhotoFrame(frameRef) {
+  useEffect(() => {
+    const freeze = () => {
+      const frame = frameRef.current
+      if (!frame) return
+      const box = frame.parentElement.getBoundingClientRect()
+      const r = frame.getBoundingClientRect()
+      Object.assign(frame.style, {
+        left: `${r.left - box.left}px`,
+        top: `${r.top - box.top}px`,
+        width: `${r.width}px`,
+        height: `${r.height}px`,
+      })
+      frame.parentElement.style.containerType = 'normal'
+    }
+    const thaw = () => {
+      const frame = frameRef.current
+      if (!frame) return
+      frame.removeAttribute('style')
+      frame.parentElement.style.containerType = ''
+    }
+    window.addEventListener('beforeprint', freeze)
+    window.addEventListener('afterprint', thaw)
+    return () => {
+      window.removeEventListener('beforeprint', freeze)
+      window.removeEventListener('afterprint', thaw)
+    }
+  }, [frameRef])
+}
+
 export default function Hero() {
+  const frameRef = useRef(null)
+  usePrintSafePhotoFrame(frameRef)
   return (
     <section id="top" className="relative overflow-hidden bg-sand">
       {/* Full-bleed photo below the header: a top band on mobile, the whole hero background on desktop */}
@@ -28,7 +63,7 @@ export default function Hero() {
 
         {/* "that's me!" is pinned to a spot in the photo itself so it tracks the person at any screen size.
             Mobile: on the floor under the chair. Desktop: written on the black desk, arrow pointing at the person. */}
-        <div aria-hidden className="pointer-events-none z-20 photo-frame">
+        <div ref={frameRef} aria-hidden className="pointer-events-none z-20 photo-frame">
           <div className="halo absolute top-[66%] left-[70%] flex animate-[fadeUp_0.8s_0.6s_ease_both] items-start gap-1 text-marker lg:top-[32%] lg:left-[81%] lg:flex-col lg:gap-0 lg:text-note-yellow lg:filter-none">
             <CurvyArrow draw className="mt-1 w-9 shrink-0 sm:w-11 lg:mt-0 lg:w-12 xl:w-14" />
             <span className="-rotate-6 font-hand text-xl leading-none font-bold whitespace-nowrap sm:text-2xl lg:ml-4 lg:text-[1.7rem] xl:text-3xl 2xl:text-[2rem]">
