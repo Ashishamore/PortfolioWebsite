@@ -9,16 +9,16 @@ export const profile = {
   fullName: 'Aashish Ashok More',
   firstName: 'Aashish',
   initials: 'am',
-  role: 'Design Engineer',
+  role: 'Senior UX Designer',
   tagline: 'UI/UX + Front-End',
   location: 'Pune, India',
   availability: 'Open to new opportunities',
   email: 'ashishashokmore@gmail.com',
-  resumeUrl: '#', // e.g. '/resume.pdf' after dropping the file into /public
+  resumeUrl: 'https://drive.google.com/drive/folders/1av_ZYGAA4sl9OELJFe0IYiLGI6TSq2-W?usp=sharing', // Google Drive folder; visitors download from there
   // Add your real profile URLs here; leave the list empty to hide the links
   socials: [
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-    { label: 'Behance', href: 'https://www.behance.net/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aashishmore/' },
+    { label: 'Behance', href: 'https://www.behance.net/ashishmore' },
   ],
 }
 
@@ -29,7 +29,7 @@ export const hero = {
   // Rendered as: Turning research into [interfaces] people ~enjoy~ using.
   headline: { start: 'Turning research into', selected: 'interfaces', middle: 'people', scribbled: 'enjoy', end: 'using.' },
   intro:
-    'a Design Engineer with 5 years in product design. I start with research, design end to end in Figma and work closely with engineers, so ideas reach real users without losing their UX quality.',
+    'a Senior UX Designer with 6+ years in product design. I start with research, design end to end in Figma and work closely with engineers, so ideas reach real users without losing their UX quality.',
 }
 
 // Decorations around the hero photo
@@ -57,12 +57,6 @@ export const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
-]
-
-export const heroStats = [
-  { value: '5+', label: 'Years in product design' },
-  { value: '65%', label: 'Lift in user engagement' },
-  { value: '50%', label: 'Less development time' },
 ]
 
 // `visual` picks the illustration on the card ('phones' uses `shots`): 'journey' | 'phones' | 'mobile' | 'dashboard' | 'web' | 'code'
@@ -118,7 +112,7 @@ export const projects = [
 export const about = {
   heading: 'Where design systems, usability craft and shipped code meet.',
   paragraphs: [
-    "I'm a Design Engineer based in Pune. I design product interfaces end-to-end in Figma and ship them as working front-end code, using AI-assisted development to close the gap between design and development.",
+    "I'm a Senior UX Designer based in Pune. I design product interfaces end-to-end in Figma and ship them as working front-end code, using AI-assisted development to close the gap between design and development.",
     "I hold an MFA in Advertising Design and I'm an HFI Certified Usability Analyst. I've led design teams and owned UX for healthcare SaaS, and before that I spent five years freelancing on branding, digital and print.",
   ],
   skillGroups: [
@@ -151,7 +145,7 @@ export const about = {
 export const experience = [
   {
     period: 'Nov 2025 - Present',
-    role: 'Design Engineer',
+    role: 'Senior UX Designer',
     company: 'Neutrino Tech Systems',
     points: [
       'Design product interfaces end-to-end in Figma, then ship them as production-ready front-end code using AI-assisted development.',
@@ -164,9 +158,9 @@ export const experience = [
     role: 'Lead UX Designer',
     company: 'CompuMatrice Media Pvt. Ltd.',
     points: [
-      'Boosted user engagement 65% by gamifying and quantifying user journeys, backed by usage data and testing.',
+      'Boosted user engagement by gamifying and quantifying user journeys, backed by usage data and testing.',
       'Led end-to-end UX for B2B and B2C healthcare SaaS products across every release.',
-      'Cut development time 50% and improved team efficiency 20% by aligning UI with Bootstrap and Ionic components.',
+      'Cut development time and improved team efficiency by aligning UI with Bootstrap and Ionic components.',
       'Ran UX sprints, launched multiple platforms on tight timelines and mentored a team of designers.',
     ],
   },

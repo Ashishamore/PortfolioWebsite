@@ -117,7 +117,7 @@
   position: absolute;
   width: var(--w);
   height: var(--h);
-  left: calc((100cqw - var(--w)) * 0.78);
+  left: calc((100cqw - var(--w)) * 0.92);
   top: calc((100cqh - var(--h)) * 0.3);
   @media (width >= 64rem) {
     left: calc((100cqw - var(--w)) * 0.75);

@@ -20,7 +20,7 @@ export default function About() {
             ))}
           </Reveal>
           <Reveal delay={150} className="mt-8">
-            <a href={profile.resumeUrl} className="group relative inline-flex items-center gap-2 pb-2 font-semibold">
+            <a href={profile.resumeUrl} target="_blank" rel="noreferrer" className="group relative inline-flex items-center gap-2 pb-2 font-semibold">
               Download résumé <ArrowUpRight />
               <Squiggle className="absolute inset-x-0 -bottom-1 h-2.5 w-full text-marker [&_path]:[stroke-dashoffset:0]" />
             </a>
