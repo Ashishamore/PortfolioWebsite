@@ -148,7 +148,9 @@ export default function LiveApp({ poster, app = 'workive-app', title = 'Workive 
           // a screenshot until someone opts in, so the page scrolls freely and loads light
           <button
             type="button"
-            onClick={() => setStarted(true)}
+            // On phones the app opens full screen at its real size. A scaled-down app inside a scrolling page
+            // is too small to use there, and phone browsers can misplace taps inside a scaled frame.
+            onClick={() => (small ? setFull(true) : setStarted(true))}
             className="group relative block w-full focus-visible:outline-3 focus-visible:-outline-offset-4 focus-visible:outline-note-yellow"
           >
             <img src={poster} alt="" className="block aspect-[390/844] w-full object-cover object-top" />
@@ -159,7 +161,7 @@ export default function LiveApp({ poster, app = 'workive-app', title = 'Workive 
                     <path d="M7 4.5v15l12-7.5z" fill="currentColor" />
                   </svg>
                 </span>
-                <span className="rounded-full bg-paper px-4 py-1.5 font-semibold text-ink">Tap to try the app</span>
+                <span className="rounded-full bg-paper px-4 py-1.5 font-semibold text-ink">{small ? 'Tap to open the app' : 'Tap to try the app'}</span>
               </span>
             </span>
           </button>
