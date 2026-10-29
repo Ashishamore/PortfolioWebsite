@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { experience, heroNotes, profile } from '../data/content'
+import { experience, heroNotes, profile, whatsappUrl } from '../data/content'
 import { CircleScribble, Cursor, Palette, StickyNote } from './Doodles'
-import { ArrowUpRight, CheckIcon, CopyIcon, MailIcon } from './Icons'
+import { ArrowUpRight, CheckIcon, CopyIcon, MailIcon, WhatsAppIcon } from './Icons'
 import Reveal from './Reveal'
 
 const currentCompany = experience[0]?.company
@@ -51,17 +51,28 @@ export default function Contact() {
             and usability.
           </p>
 
-          <div className="relative mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              href={`mailto:${profile.email}`}
-              className="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-note-yellow bg-note-yellow px-5 py-4 text-sm font-semibold text-ink sm:px-7 sm:text-base transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-marker)]"
-            >
-              <MailIcon /> {profile.email}
-            </a>
+          {/* the two ways to talk, side by side; copying the address is a small extra underneath */}
+          <div className="relative mt-10">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href={`mailto:${profile.email}`}
+                className="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-note-yellow bg-note-yellow px-5 py-4 text-sm font-semibold text-ink sm:px-7 sm:text-base transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-marker)]"
+              >
+                <MailIcon /> {profile.email}
+              </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#25d366] bg-[#25d366] px-5 py-4 text-sm font-semibold text-ink transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-marker)] sm:px-7 sm:text-base"
+              >
+                <WhatsAppIcon /> WhatsApp
+              </a>
+            </div>
             <button
               type="button"
               onClick={copyEmail}
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-dashed border-cream/40 px-6 py-4 font-mono text-sm transition-colors hover:border-solid hover:border-cream"
+              className="mt-4 inline-flex cursor-pointer items-center gap-2 font-mono text-sm text-cream/70 underline decoration-cream/30 underline-offset-4 transition-colors hover:text-note-yellow hover:decoration-note-yellow"
             >
               {copied ? <CheckIcon /> : <CopyIcon />}
               <span aria-live="polite">{copied ? 'copied!' : 'copy email'}</span>

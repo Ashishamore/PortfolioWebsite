@@ -18,9 +18,9 @@ export const workive = {
   title: { before: 'Workive!: one place to', highlight: 'staff', after: 'a photo shoot' },
   deck: "Born from my college days shooting weddings: a working prototype for photographers and videographers who staff each other's shoots, with assignments, crew availability, money and chat in one app.",
   meta: [
-    { label: 'Role', value: 'Product designer + front-end, solo' },
+    { label: 'Role', value: 'Product designer, solo' },
     { label: 'Platform', value: 'Mobile web prototype' },
-    { label: 'Built with', value: 'React, TypeScript, Tailwind CSS, AI-assisted development' },
+    { label: 'Prototype', value: 'Working prototype, built with AI-assisted tools' },
   ],
   // the live app in the hero starts from this screenshot until someone taps it
   heroPoster: 'home',

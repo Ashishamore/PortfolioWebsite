@@ -1,8 +1,8 @@
 // Lo-fi wireframe thumbnails for the case-study cards, drawn like whiteboard sketches.
-// Types: journey, phones, mobile, dashboard, web, code. Swap for real screenshots any time:
+// Types: journey (the specialty pharma story map), phones, mobile, dashboard, web, code. Swap for real screenshots any time:
 // <img src={...} className="h-full w-full object-cover" /> inside the card.
 import { CurvyArrow } from './Doodles'
-import JourneyDiagram from './JourneyDiagram'
+import { AccessThumb } from './casestudy/AccessStudy'
 import { sitesaathiScreens } from '../data/sitesaathi'
 import { workiveScreens } from '../data/workive'
 
@@ -30,16 +30,18 @@ function Note({ children, className = '', arrowClass = '' }) {
   )
 }
 
-// One patient's journey map (shared with the case-study page hero)
+// One patient's case across the map (the same map as the case study's "where everyone is")
 function Journey({ note }) {
   return (
     <div className="relative flex h-full items-end justify-center px-6 pt-12 sm:px-8">
-      <div className={`${sheet} flex h-[84%] w-full max-w-lg flex-col rounded-t-xl border-b-0 transition-transform duration-500 group-hover:-translate-y-2`}>
+      <div className={`${sheet} flex h-[84%] w-full max-w-lg flex-col overflow-hidden rounded-t-xl border-b-0 transition-transform duration-500 group-hover:-translate-y-2`}>
         <div className="flex items-center justify-between border-b-2 border-ink px-3 py-2 font-mono text-[10px] text-ink-soft">
-          <span>journey_map / patient_01</span>
-          <span className="hidden sm:inline">5 states · 3 sites</span>
+          <span>story_map / case-0001</span>
+          <span className="hidden sm:inline">12 cities · 4 time zones</span>
         </div>
-        <JourneyDiagram className="min-h-0 w-full flex-1 px-3 pt-2 pb-9" />
+        <div className="flex min-h-0 flex-1 items-center justify-center bg-dots px-2 pt-1 pb-3">
+          <AccessThumb className="max-h-full w-full" />
+        </div>
       </div>
       <Note className="top-3 left-6" arrowClass="rotate-[200deg] -scale-x-100 order-last">
         {note}

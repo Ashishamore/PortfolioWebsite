@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import heroImage from '../assets/hero.jpg'
 import { certification, hero, heroNotes, profile } from '../data/content'
-import { Cursor, CurvyArrow, Palette, Selection, Sparkle, Squiggle, StickyNote } from './Doodles'
-import { ArrowDown, ArrowUpRight, SealIcon } from './Icons'
+import CertificateDialog, { preloadCertificate } from './CertificateDialog'
+import { Cursor, CurvyArrow, Selection, Sparkle, Squiggle } from './Doodles'
+import { ArrowDown, ArrowUpRight, ExpandIcon, SealIcon } from './Icons'
 
 // Chrome renders a blank page when printing a size container, so before printing the photo's
 // pinned annotations are frozen at their on-screen size and the container query is switched off.
@@ -39,6 +41,8 @@ function usePrintSafePhotoFrame(frameRef) {
 export default function Hero() {
   const frameRef = useRef(null)
   usePrintSafePhotoFrame(frameRef)
+  const badgeRef = useRef(null)
+  const [certOpen, setCertOpen] = useState(false)
   return (
     // --band: height of the mobile photo band, sized to the width so the whole desk fits on a phone
     <section id="top" className="relative overflow-hidden bg-sand [--band:min(120vw,60svh)]">
@@ -72,33 +76,6 @@ export default function Hero() {
             </span>
           </div>
         </div>
-
-        <StickyNote
-          color="bg-note-pink"
-          rotate="rotate-3"
-          tape
-          className="absolute right-[4%] bottom-[12%] z-10 hidden w-44 animate-[fadeUp_0.8s_0.8s_ease_both] p-4 text-2xl lg:block xl:w-52 xl:text-[1.7rem]"
-        >
-          {heroNotes.sticky}
-        </StickyNote>
-
-        <Palette
-          colors={heroNotes.palette}
-          className="absolute right-[26%] bottom-[11%] z-10 hidden -rotate-2 animate-[fadeUp_0.8s_1s_ease_both] xl:block"
-        />
-
-        {/* mobile + tablet: smaller versions of the same notes around the desk (wall top-left, floor left of the chair) */}
-        <StickyNote
-          color="bg-note-pink"
-          rotate="-rotate-3"
-          tape
-          className="absolute top-[4%] left-4 z-10 w-24 animate-[fadeUp_0.8s_0.8s_ease_both] p-2 text-[0.8rem] leading-snug sm:left-8 sm:w-32 sm:p-3 sm:text-base lg:hidden"
-        >
-          {heroNotes.sticky}
-        </StickyNote>
-        <div aria-hidden className="absolute bottom-[25%] left-4 z-10 origin-bottom-left scale-50 rotate-2 animate-[fadeUp_0.8s_1s_ease_both] sm:left-8 sm:scale-[0.65] lg:hidden">
-          <Palette colors={heroNotes.palette} />
-        </div>
       </div>
 
       {/* dotted canvas behind the copy */}
@@ -109,9 +86,9 @@ export default function Hero() {
       {/* blend the hero into the page below */}
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-sand/0 to-cream" />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col px-4 pt-[calc(4.5rem+var(--band)*0.8)] pb-20 sm:px-6 lg:min-h-svh lg:justify-center lg:px-8 lg:pt-32 lg:pb-24">
+      <div className="relative mx-auto flex max-w-7xl flex-col px-4 pt-[calc(4.5rem+var(--band)*0.8)] pb-20 sm:px-6 lg:min-h-svh lg:justify-center lg:px-8 lg:pt-28 lg:pb-20 short:pt-24">
         <div className="max-w-xl animate-[fadeUp_0.9s_0.15s_ease_both] lg:max-w-[30rem] xl:max-w-[38rem]">
-          <h1 className="text-[2.75rem] leading-[1.02] font-extrabold tracking-[-0.02em] sm:text-6xl lg:text-[3.6rem] xl:text-[4.6rem]">
+          <h1 className="text-[2.75rem] leading-[1.02] font-extrabold tracking-[-0.02em] sm:text-6xl lg:text-[3.6rem] xl:text-[4.6rem] short:max-w-[28rem] short:text-[3.4rem]">
             {hero.headline.start}{' '}
             <Selection className="whitespace-nowrap">
               {hero.headline.selected}
@@ -128,28 +105,65 @@ export default function Hero() {
             {hero.headline.end}
           </h1>
 
-          <p className="mt-5 flex items-center gap-2 font-hand text-2xl text-marker sm:text-[1.7rem]">
+          <p className="mt-5 flex items-center gap-2 font-hand text-2xl text-marker sm:text-[1.7rem] short:mt-3">
             <Sparkle className="size-5 shrink-0" />
             {heroNotes.aside}
           </p>
 
-          <p className="mt-4 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg">
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-ink-soft sm:text-lg short:mt-3 short:text-base">
             Hi, I&apos;m {profile.firstName}, {hero.intro}
           </p>
 
-          {/* certification badge */}
-          <p className="mt-6 inline-flex max-w-full items-center gap-3 rounded-2xl border-2 border-ink bg-paper py-2 pr-4 pl-2 shadow-[3px_3px_0_var(--color-ink)]">
+          {/* AI-enabled UX: what it means here, with plain links to the proof */}
+          <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 short:mt-5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1.5 text-sm font-bold text-cream">
+              <Sparkle className="size-3.5 text-note-yellow" />
+              {hero.ai.label}
+            </span>
+            {hero.ai.proofs.map((proof) => (
+              <Link
+                key={proof.to}
+                to={proof.to}
+                className="inline-flex items-center gap-1 text-sm text-ink-soft underline decoration-ink/30 underline-offset-4 transition-colors hover:text-ink hover:decoration-ink"
+              >
+                {proof.label} <ArrowUpRight className="size-3.5" />
+              </Link>
+            ))}
+          </div>
+
+          {/* certification badge: opens the certificate itself */}
+          <button
+            ref={badgeRef}
+            type="button"
+            aria-haspopup="dialog"
+            onClick={() => setCertOpen(true)}
+            onPointerEnter={preloadCertificate}
+            onFocus={preloadCertificate}
+            className="group mt-4 inline-flex max-w-full cursor-pointer short:mt-3 items-center gap-3 rounded-2xl border-2 border-ink bg-paper py-2 pr-2 pl-2 text-left shadow-[3px_3px_0_var(--color-ink)] transition-all hover:-translate-y-0.5 hover:shadow-[5px_5px_0_var(--color-marker)] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-figma active:translate-y-0 active:shadow-[2px_2px_0_var(--color-ink)]"
+          >
             <SealIcon className="size-8 shrink-0 text-figma" />
             <span className="leading-tight">
+              <span className="sr-only">View certificate: </span>
               <span className="block text-sm font-bold sm:text-base">{certification.title}</span>
               <span className="block font-mono text-[10px] tracking-wide text-ink-soft uppercase sm:text-[11px]">
                 <span className="max-sm:hidden">Human Factors International · </span>
                 <span className="whitespace-nowrap">{certification.detail}</span>
               </span>
             </span>
-          </p>
+            {/* always visible, so it reads as clickable on touch screens too */}
+            <span className="ml-1 grid size-8 shrink-0 place-items-center rounded-full border-2 border-ink transition-all duration-300 group-hover:scale-110 group-hover:bg-ink group-hover:text-cream">
+              <ExpandIcon className="size-3.5" />
+            </span>
+          </button>
+          <CertificateDialog
+            open={certOpen}
+            onClose={() => {
+              setCertOpen(false)
+              badgeRef.current?.focus()
+            }}
+          />
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row short:mt-6">
             <a
               href="#work"
               className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-ink bg-ink px-7 py-3.5 font-semibold text-cream transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--color-marker)]"

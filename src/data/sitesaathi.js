@@ -20,9 +20,9 @@ export const sitesaathi = {
   title: { before: 'Stop losing money in the', highlight: 'gaps', after: 'between sites' },
   deck: 'A project management platform for contractors who take on contracts, deploy labour and get the work done. One app for every site, worker, rupee and client.',
   meta: [
-    { label: 'Role', value: 'Product designer + front-end, solo' },
+    { label: 'Role', value: 'Product designer, solo' },
     { label: 'Status', value: 'Work in progress' },
-    { label: 'Built with', value: 'React, Tailwind, zustand, AI-assisted development' },
+    { label: 'Prototype', value: 'Working prototype, built with AI-assisted tools' },
   ],
   app: 'sitesaathi-app',
   poster: 'login',

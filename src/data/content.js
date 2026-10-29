@@ -1,4 +1,4 @@
-import { mariaJourney } from './mariaJourney'
+import { accessStory } from './accessStory'
 import { sitesaathi } from './sitesaathi'
 import { workive } from './workive'
 
@@ -10,10 +10,17 @@ export const profile = {
   firstName: 'Aashish',
   initials: 'am',
   role: 'Senior UX Designer',
-  tagline: 'UI/UX + Front-End',
+  tagline: 'Senior UX Designer',
   location: 'Pune, India',
   availability: 'Open to new opportunities',
   email: 'ashishashokmore@gmail.com',
+  // WhatsApp, offered under "Let's talk" and on the contact board. `number` is in international format
+  // without the +; `message` is pre-typed in the chat, so it's clear where the contact came from.
+  whatsapp: {
+    number: '918275386672',
+    display: '+91 82753 86672',
+    message: 'Hi Aashish, I came across your portfolio and would like to connect.',
+  },
   resumeUrl: 'https://drive.google.com/drive/folders/1av_ZYGAA4sl9OELJFe0IYiLGI6TSq2-W?usp=sharing', // Google Drive folder; visitors download from there
   // Add your real profile URLs here; leave the list empty to hide the links
   socials: [
@@ -22,21 +29,43 @@ export const profile = {
   ],
 }
 
+// WhatsApp click-to-chat link: the app on phones, WhatsApp Web on desktop
+export const whatsappUrl = `https://wa.me/${profile.whatsapp.number}?text=${encodeURIComponent(profile.whatsapp.message)}`
+
 // Headline credential, shown in the hero and in the About credentials list
-export const certification = { title: 'HFI Certified Usability Analyst (CUA™)', detail: 'No. 2024-9188' }
+// Clicking the hero badge opens the certificate itself (see CertificateDialog)
+export const certification = {
+  title: 'HFI Certified Usability Analyst (CUA™)',
+  detail: 'No. 2024-9188',
+  year: 'Nov 2024',
+  kind: 'Certification',
+  issued: '1 Nov 2024',
+  // HFI's public directory of certified analysts, at the "A" page that lists "Ashish More".
+  // #11210 is the anchor HFI puts just before the name; the :~:text part makes current browsers scroll the name
+  // to the middle of the screen and highlight it. Browsers without text-fragment support open the top of the page.
+  verifyUrl:
+    'https://humanfactors.com/hfi_new/certification/cua_directorylist_byname.asp?listview=lastname&alphabet=A#11210:~:text=Ashish%20More',
+}
 
 export const hero = {
   // Rendered as: Turning research into [interfaces] people ~enjoy~ using.
   headline: { start: 'Turning research into', selected: 'interfaces', middle: 'people', scribbled: 'enjoy', end: 'using.' },
   intro:
-    'a Senior UX Designer with 6+ years in product design. I start with research, design end to end in Figma and work closely with engineers, so ideas reach real users without losing their UX quality.',
+    'a Senior UX Designer with 10 years in design, the last 5 in UI/UX. I start with research, design end to end in Figma, and use AI to learn new domains fast and turn designs into working prototypes, so ideas reach real users with their UX quality intact.',
+  // "AI-enabled UX design": how AI shows up in the work, each linked to the case study that proves it
+  ai: {
+    label: 'AI-enabled UX design',
+    proofs: [
+      { label: 'AI persona interviews', to: '/work/specialty-pharma' },
+      { label: 'AI-built prototypes', to: '/work/workive' },
+    ],
+  },
 }
 
-// Decorations around the hero photo
+// Notes around the hero. `palette` is the swatch card on the contact board.
 export const heroNotes = {
-  sticky: 'HMW make complex flows feel effortless?',
   pointer: "that's me!",
-  aside: 'research first, always',
+  aside: 'research first, AI-enabled',
   palette: ['#16232c', '#f3e9ae', '#ffc6d3', '#bfe0f5', '#ec5b3b'],
 }
 
@@ -45,10 +74,11 @@ export const ticker = [
   'Wireframes',
   'Usability testing',
   'Design systems',
+  'AI-enabled UX',
   'Prototyping',
-  'Front-end code',
+  'Service design',
   'Accessibility',
-  'AI-assisted dev',
+  'Journey mapping',
   'Heuristic evaluation',
 ]
 
@@ -65,15 +95,15 @@ export const navLinks = [
 // Otherwise set `link` to an external case study or Behance post when you have one.
 export const projects = [
   {
-    title: 'Making a 20+ module platform legible',
+    title: "One patient's story, the whole platform",
     slug: 'specialty-pharma',
     client: 'Specialty Pharma · Patient Access',
     frame: 'specialty-pharma',
     year: '2025-26',
     summary:
-      "Mapped a multi-tenant specialty drug access platform as one patient's journey across time and geography, turning a system nobody could hold in their head into a story a team of 35 could.",
-    tags: ['Service design', 'Journey mapping', 'Enterprise UX'],
-    result: '2 weeks → 30 min onboarding',
+      "Personified a 20+ module specialty drug access platform as one patient's story, with real people, places and times. It became the team's domain KT: weeks of confusion turned into a thirty-minute walkthrough.",
+    tags: ['Storytelling', 'Service design', 'Domain KT'],
+    result: '2 weeks → 30 min',
     visual: 'journey',
     tint: 'bg-note-green',
     note: 'one patient = the whole system',
@@ -90,7 +120,7 @@ export const projects = [
     result: 'Try it right here',
     visual: 'phones',
     tint: 'bg-note-orange',
-    note: 'designed + built',
+    note: 'designed + prototyped',
   },
   {
     title: 'SiteSaathi: every site, worker and rupee in one app',
@@ -110,18 +140,16 @@ export const projects = [
 ]
 
 export const about = {
-  heading: 'Where design systems, usability craft and shipped code meet.',
+  heading: 'Where research, design systems and usability craft meet.',
   paragraphs: [
-    "I'm a Senior UX Designer based in Pune. I design product interfaces end-to-end in Figma and ship them as working front-end code, using AI-assisted development to close the gap between design and development.",
+    "I'm a Senior UX Designer based in Pune. I design complex product interfaces end to end, from research and journey mapping to Figma prototypes, and work closely with engineers so what ships matches what was designed.",
     "I hold an MFA in Advertising Design and I'm an HFI Certified Usability Analyst. I've led design teams and owned UX for healthcare SaaS, and before that I spent five years freelancing on branding, digital and print.",
   ],
+  // `wide` clusters run the full width of the board
   skillGroups: [
     {
-      label: 'Build',
-      items: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'Ionic', 'Storybook', 'Git', 'AI-assisted dev', 'Shopify'],
-    },
-    {
       label: 'Design',
+      wide: true,
       items: ['Design systems', 'Component libraries', 'Design tokens', 'Wireframing', 'Prototyping', 'Information architecture'],
     },
     {
@@ -130,15 +158,23 @@ export const about = {
     },
     {
       label: 'Lead',
-      items: ['Team mentoring', 'Stakeholder communication', 'Design storytelling', 'JIRA', 'Confluence'],
+      items: ['Team mentoring', 'Stakeholder communication', 'Design storytelling'],
     },
   ],
-  tools: ['Figma', 'Adobe XD', 'Miro', 'Storybook', 'Claude Code', 'Cursor', 'Copilot', 'Git'],
+  // The toolkit board: the tools I use, grouped by what they're for. Each name needs a logo in toolIcons.js.
+  // On wide screens the groups sit in rows of eight tools, in this order: 5 + 3, then 2 + 6.
+  toolkit: [
+    { group: 'Design & prototyping', tools: ['Figma', 'FigJam', 'Adobe XD', 'Photoshop', 'Illustrator'] },
+    { group: 'Research & testing', tools: ['Maze', 'Hotjar', 'Miro'] },
+    { group: 'AI tools', tools: ['Claude', 'Lovable'] },
+    { group: 'Build & handoff', tools: ['VS Code', 'HTML', 'CSS', 'Storybook', 'Jira', 'Confluence'] },
+  ],
+  // Oldest first: the About section lays them out as a timeline
   credentials: [
+    { title: 'BFA, Advertising Design', detail: 'Govt. School of Art, Dr. B.A.M.U.', year: '2014', kind: 'Degree' },
+    { title: 'MFA, Advertising Design', detail: 'Govt. School of Art, Dr. B.A.M.U.', year: '2016', kind: 'Degree' },
     certification,
-    { title: 'HFI Certified Service Design Thinker', detail: 'Nov 2024' },
-    { title: 'MFA, Advertising Design', detail: 'Govt. School of Art, Dr. B.A.M.U. · 2016' },
-    { title: 'BFA, Advertising Design', detail: 'Govt. School of Art, Dr. B.A.M.U. · 2014' },
+    { title: 'HFI Certified Service Design Thinker', detail: 'Human Factors International', year: 'Nov 2024', kind: 'Certification' },
   ],
 }
 
@@ -148,9 +184,9 @@ export const experience = [
     role: 'Senior UX Designer',
     company: 'Neutrino Tech Systems',
     points: [
-      'Design product interfaces end-to-end in Figma, then ship them as production-ready front-end code using AI-assisted development.',
-      'Review AI-generated UI for structure, spacing, states and accessibility before it reaches production.',
-      'Work directly with engineers to ship interface changes faster, without hand-off review cycles.',
+      'Own end-to-end UX for a multi-tenant specialty pharma platform: enrollment, benefits verification, prior authorization, appeals, financial assistance, pharmacy fulfilment and adherence, across several user groups.',
+      "Mapped the whole service as one patient's journey, giving a 30+ person team a shared model of the system and cutting new-member onboarding from about two weeks to a 30-minute walkthrough.",
+      'Review UI builds for structure, spacing, states and accessibility before release, and work closely with engineers so they match the design.',
     ],
   },
   {
@@ -184,124 +220,7 @@ export const experience = [
 
 // Full case-study pages, keyed by the project's `slug` (URL: /work/<slug>)
 export const caseStudies = {
-  'specialty-pharma': {
-    eyebrow: 'Enterprise B2B · Healthcare · 2025-26',
-    // Rendered with the `highlight` word marked like a highlighter pen
-    title: { before: 'Making a specialty pharma platform', highlight: 'legible', after: 'to the people building it' },
-    deck: "Cut new-member onboarding from two weeks to a thirty-minute walkthrough by turning a multi-module platform into one patient's journey.",
-    meta: [
-      { label: 'Role', value: 'Senior UI/UX Designer' },
-      { label: 'Team', value: 'Team of 30-35' },
-      { label: 'Practice', value: 'Narrative design, service design, journey mapping' },
-    ],
-    // Hero swimlane map, following the program journey in "Maria's Access Journey".
-    // Stages are the columns (time), lanes are personas. `path` is the case moving through the lanes:
-    // `at` is the stage index (0.5 = between stages), `place` turns a step into a location pin.
-    // `detour` (the denial and appeal) leaves path step `from`, goes via the appeal and rejoins at step `to`;
-    // the straight line between them is the route when the first authorization is approved.
-    journeyMap: {
-      stages: ['Enroll', 'Verify', 'Authorize', 'Afford', 'Initiate', 'Adhere'],
-      lanes: [
-        { name: 'Provider' },
-        { name: 'Hub', main: true },
-        { name: 'Payer' },
-        { name: 'Specialty Pharmacy' },
-        { name: 'Patient' },
-        { name: 'Manufacturer', receivesData: true },
-      ],
-      path: [
-        { lane: 'Provider', at: 0, place: 'Columbus' },
-        { lane: 'Hub', at: 0.55, place: 'Dallas' },
-        { lane: 'Payer', at: 1, place: 'Hartford' },
-        { lane: 'Payer', at: 1.6 },
-        { lane: 'Payer', at: 2.4 },
-        { lane: 'Hub', at: 2.85 },
-        { lane: 'Patient', at: 3.6 },
-        { lane: 'Specialty Pharmacy', at: 4, place: 'Memphis' },
-        { lane: 'Patient', at: 4.55, place: 'home' },
-        { lane: 'Patient', at: 5 },
-      ],
-      detour: { from: 3, to: 4, appeal: { lane: 'Hub', at: 2 } },
-    },
-    context: {
-      text: [
-        "A multi-tenant platform for specialty drug patient access, covering the full journey from a physician's prescription through to therapy start and ongoing adherence.",
-        'It spans several distinct user groups, each with different permissions and views of the same case.',
-      ],
-      // `main: true` marks the platform's primary user
-      personas: [
-        { name: 'Provider', role: 'Doctor or hospital that prescribes and enrolls the patient' },
-        { name: 'Hub', role: "Case managers who run the patient's case", main: true },
-        { name: 'Specialty Pharmacy', role: 'Dispenses and ships the drug' },
-        { name: 'Payer', role: 'Insurance company that covers or denies the drug' },
-        { name: 'Manufacturer', role: 'Pharma company that funds the program and wants analytics' },
-        { name: 'Patient', role: 'The person receiving therapy' },
-        { name: 'Platform', role: 'Internal operator and admin' },
-      ],
-    },
-    approach: {
-      statement:
-        "Rather than documenting the system module by module, I mapped it as one patient's journey, anchored to real time and real places.",
-      // left side of the "before / after" sketch: how the platform was described before
-      modules: ['intake', 'consent', 'eligibility', 'prior auth', 'appeals', 'copay', 'SP triage', 'shipping', 'claims', 'adherence', 'reauth', 'analytics'],
-      story: mariaJourney,
-    },
-    outcome: {
-      lead: 'The team converged on a single shared understanding of the journey.',
-      onboarding: {
-        before: '2-3 weeks',
-        beforeNote: 'For a new member to understand how the platform fits together.',
-        after: '30 minutes',
-        afterNote: 'One presentation walkthrough of the journey.',
-      },
-      points: [
-        {
-          title: 'One shared understanding',
-          text: 'Everyone on the team now holds the same picture of how the platform works, end to end.',
-        },
-        {
-          title: 'A common reference point',
-          text: 'Cross-team conversations start from the journey instead of being rebuilt each time.',
-        },
-      ],
-      travelled: {
-        title: 'The narrative travelled beyond its original purpose',
-        text: "The marketing team adopted it for client-facing pitches, having found it explained the platform's value more clearly than the module-based framing had.",
-        from: 'Team onboarding',
-        to: 'Client pitches',
-      },
-    },
-    // `highlight` is marked with a highlighter in the text; `contrast` is the small before/after pair under it
-    endLine: 'Want the longer version, or to talk about a system like this?',
-    learned: {
-      lessons: [
-        {
-          title: 'The hardest problem is shared comprehension',
-          text: [
-            "In complex enterprise systems, the hardest design problem often isn't the interface. It's shared comprehension.",
-            "When a team can't see the whole, every local decision carries a risk of being locally right and globally wrong.",
-          ],
-          highlight: 'locally right and globally wrong',
-          contrast: {
-            left: { label: 'seen inside one module', text: 'locally right' },
-            right: { label: 'seen across the journey', text: 'globally wrong' },
-          },
-        },
-        {
-          title: 'Narrative is a design tool',
-          text: [
-            'I also learned that narrative is a design tool, not a presentation device.',
-            'Specification documents describe a system. A story makes people able to hold it in their heads.',
-          ],
-          highlight: 'narrative is a design tool, not a presentation device',
-          contrast: {
-            left: { label: 'specification documents', text: 'describe a system' },
-            right: { label: 'a story', text: 'lets people hold it in their heads' },
-          },
-        },
-      ],
-    },
-  },
+  'specialty-pharma': accessStory,
   workive,
   sitesaathi,
 }

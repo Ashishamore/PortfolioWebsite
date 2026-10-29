@@ -1,14 +1,14 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { caseStudies, projects } from '../data/content'
+import AccessStudy, { AccessVisual } from '../components/casestudy/AccessStudy'
 import CaseEnd from '../components/casestudy/CaseEnd'
 import MoreWork from '../components/casestudy/MoreWork'
-import PharmaStudy, { PharmaVisual } from '../components/casestudy/PharmaStudy'
 import SiteSaathiStudy, { SiteSaathiVisual } from '../components/casestudy/SiteSaathiStudy'
 import WorkiveStudy, { WorkiveVisual } from '../components/casestudy/WorkiveStudy'
 
 // Each case study brings its own hero visual and body; the header, sign-off and "more" links are shared
 const layouts = {
-  'specialty-pharma': { Visual: PharmaVisual, Body: PharmaStudy },
+  'specialty-pharma': { Visual: AccessVisual, Body: AccessStudy },
   workive: { Visual: WorkiveVisual, Body: WorkiveStudy },
   sitesaathi: { Visual: SiteSaathiVisual, Body: SiteSaathiStudy },
 }
@@ -42,7 +42,13 @@ export default function CaseStudy() {
           <div className="mt-10 max-w-5xl animate-[fadeUp_0.9s_ease_both] lg:mt-14">
             <p className="font-mono text-xs tracking-wide text-ink-soft uppercase sm:text-sm">{study.eyebrow}</p>
             <h1 className="mt-5 text-[2.5rem] leading-[1.04] font-extrabold tracking-[-0.02em] sm:text-6xl lg:text-7xl">
-              {study.title.before} <span className="marker-swipe">{study.title.highlight}</span> {study.title.after}
+              {study.title.before} <span className="marker-swipe">{study.title.highlight}</span>
+              {/* closing punctuation sits tight against the highlight */}
+              {/^[.,!?]/.test(study.title.after) ? (
+                <span className="-ml-[0.12em]">{study.title.after}</span>
+              ) : (
+                ` ${study.title.after}`
+              )}
             </h1>
             <p className="mt-7 max-w-4xl text-xl leading-snug text-ink-soft sm:text-2xl lg:text-[1.75rem]">
               {study.deck}

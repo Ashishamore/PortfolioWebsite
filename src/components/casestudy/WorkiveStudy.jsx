@@ -113,11 +113,11 @@ export default function WorkiveStudy({ study }) {
         </div>
       </section>
 
-      {/* 03 Personas */}
-      <Personas personas={study.personas} />
+      {/* 03 Competitive analysis */}
+      <Competition competition={study.competition} index="03" />
 
-      {/* 04 Competitive analysis */}
-      <Competition competition={study.competition} index="04" />
+      {/* 04 Personas */}
+      <Personas personas={study.personas} index="04" />
 
       {/* 05 Information architecture */}
       <InfoArchitecture ia={study.ia} />
